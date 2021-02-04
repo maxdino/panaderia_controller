@@ -36,6 +36,8 @@ $routes->resource('clientes');
 $routes->resource('empresa');
 $routes->resource('modulos');
 $routes->resource('perfiles');
+$routes->resource('login');
+$routes->resource('permisos');
 /**
 
  * --------------------------------------------------------------------

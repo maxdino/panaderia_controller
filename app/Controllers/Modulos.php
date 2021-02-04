@@ -121,7 +121,6 @@ class Modulos extends Controller{
                             'icono' => 'required|string|max_length[255]',
                             'url' => 'required|string|max_length[255]',
                             'padre' => 'required|string|max_length[255]',
-                            'orden' => 'required|string|max_length[255]'
                         ]);
                         $validation->withRequest($this->request)
                         ->run();    
