@@ -38,6 +38,9 @@ $routes->resource('modulos');
 $routes->resource('perfiles');
 $routes->resource('login');
 $routes->resource('permisos');
+$routes->resource('usuario');
+$routes->resource('permisos_modulo');
+$routes->resource('categoria');
 /**
 
  * --------------------------------------------------------------------

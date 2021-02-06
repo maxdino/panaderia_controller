@@ -21,10 +21,10 @@ class Permisos extends Controller{
 				if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
 				 
 					$model = new PermisosModel();
-		 			$permisos = $model->getTraerpermisos($id);
-		 			$modulo = $model->getTraermodulo();
+		 			$padre = $model->gettraerpadrebarra($id);
+		 		 	$hijo = $model->gettraerhijobarra($id);
 		 			 
-					if (empty($modulo)) {
+					if (empty($padre)) {
 						$data = array(
 							"Status"=>404,
 							"Total de resultados" => 0,
@@ -34,9 +34,10 @@ class Permisos extends Controller{
 					else{
 						$data = array(
 							"Status" => 200,
-							'Total de resultados' => count($modulo),
-							"permisos" => $permisos,
-							"modulo" => $modulo,
+							'Total de resultados' => count($padre),
+							"padre" => $padre ,
+							"hijo" => $hijo 
+ 
 						);
 						return json_encode($data, true);
 					}	
