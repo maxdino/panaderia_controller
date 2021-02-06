@@ -113,6 +113,7 @@ class Proveedor extends Controller{
                         "apellido2"=>$request->getVar("apellido_materno"),
                         "direccion"=>$request->getVar("direccion"),
                         "telefono"=>$request->getVar("telefono"),
+                        "email"=>$request->getVar("email"),
                         "empresa"=>$request->getVar("empresa"),
                         "imagen"=>$request->getVar("imagen"),
                     );
@@ -124,6 +125,7 @@ class Proveedor extends Controller{
                             'apellido_materno' => 'required|string|max_length[255]',
                             'direccion' => 'required|string|max_length[255]',
                             'telefono' => 'required|string|max_length[255]',
+                            'email' => 'required|string|max_length[255]',
                             'empresa' => 'required|string|max_length[255]',
                             'imagen' => 'required|string|max_length[255]'   
                         ]);
@@ -141,6 +143,7 @@ class Proveedor extends Controller{
                                 "apellido2"=>$datos["apellido2"],
                                 "direccion"=>$datos["direccion"],
                                 "telefono"=>$datos["telefono"],
+                                "email"=>$datos["email"],
                                 "id_empresa"=>$datos["empresa"],
                                 "imagen"=>$datos["imagen"]
                             );          
@@ -192,6 +195,7 @@ class Proveedor extends Controller{
                            'apellido_materno' => 'required|string|max_length[255]',
                            'direccion' => 'required|string|max_length[255]',
                            'telefono' => 'required|string|max_length[255]',
+                           'email' => 'required|string|max_length[255]',
                            'empresa' => 'required|string|max_length[255]',
                            'imagen' => 'required|string|max_length[255]'
                         ]);
@@ -211,6 +215,7 @@ class Proveedor extends Controller{
                                 "apellido2"=>$datos["apellido_materno"],
                                 "direccion"=>$datos["direccion"],
                                 "telefono"=>$datos["telefono"],
+                                "email"=>$datos["email"],
                                 "id_empresa"=>$datos["empresa"],
                                 "imagen"=>$datos["imagen"]
                             );          

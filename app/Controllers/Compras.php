@@ -18,8 +18,7 @@ class Compras extends Controller{
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                             
                     $model = new ComprasModel();
-                    $compras = $model->where('estado', 1)
-                    ->findAll();
+                    $compras = $model->listar_compras();
 
                     if (empty($compras)) {
                         $data = array(

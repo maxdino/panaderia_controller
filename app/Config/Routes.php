@@ -44,6 +44,7 @@ $routes->resource('categoria');
 $routes->resource('proveedor');
 $routes->resource('unidad_medida');
 $routes->resource('compras');
+$routes->resource('ingredientes');
 /**
 
  * --------------------------------------------------------------------

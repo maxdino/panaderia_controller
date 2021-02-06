@@ -7,5 +7,5 @@ class ProveedorModel extends Model
 	protected $table      = 'proveedor';
 	protected $primaryKey = 'id_proveedor';
 	protected $returnType     = 'array';
-	protected $allowedFields = ['nombres', 'apellido1', 'apellido2', 'direccion', 'telefono', 'id_empresa','imagen' ,'estado'];
+	protected $allowedFields = ['nombres', 'apellido1', 'apellido2', 'direccion', 'telefono','email','id_empresa','imagen' ,'estado'];
 }
