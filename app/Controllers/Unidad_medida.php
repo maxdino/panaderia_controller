@@ -1,10 +1,10 @@
 <?php
 namespace App\Controllers;
 use CodeIgniter\Controller;
-use App\Models\PerfilesModel;
+use App\Models\Unidad_medidaModel;
 use App\Models\RegistrosModel;
 
-class Perfiles extends Controller{
+class unidad_medida extends Controller{
     public function index(){
         $request = \Config\Services::request(); 
         $validation = \Config\Services::validation();
@@ -16,10 +16,10 @@ class Perfiles extends Controller{
             if(array_key_exists('Authorization', $headers) && !empty($headers['Authorization'])){
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                             
-                    $model = new PerfilesModel();
-                    $perfil = $model->where('estado', 1)
+                    $model = new Unidad_medidaModel();
+                    $unidad_medida = $model->where('estado', 1)
                     ->findAll();
-                    if (empty($perfil)) {
+                    if (empty($unidad_medida)) {
                         $data = array(
                             "Status"=>404,
                             "Total de resultados" => 0,
@@ -30,8 +30,8 @@ class Perfiles extends Controller{
                     else{
                         $data = array(
                             "Status" => 200,
-                            'Total de resultados' => count($perfil),
-                            "Detalles" => $perfil
+                            'Total de resultados' => count($unidad_medida),
+                            "Detalles" => $unidad_medida
                         );
                         return json_encode($data, true);
                     }   
@@ -63,18 +63,19 @@ class Perfiles extends Controller{
             if(array_key_exists('Authorization', $headers) && !empty($headers['Authorization'])){
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                             
-                    $model = new PerfilesModel();
-                    $perfil = $model->traerperfiles($id);
-                    if (empty($perfil)) {
+                    $model = new Unidad_medidaModel();
+                    $unidad_medida = $model->where('estado', 1)
+                    ->find( $id );
+                    if (empty($unidad_medida)) {
                         $data = array(
                             "Status"=>404,
-                            "Detalles"=>"No hay ningún perfil con este id" 
+                            "Detalles"=>"No hay ningún unidad_medida con este id" 
                         );
                     }
                     else{
                         $data = array(
                             'Status' => 200,
-                            "Detalles" => $perfil
+                            "Detalles" => $unidad_medida
                         );
                         return json_encode($data, true);
                         
@@ -107,13 +108,15 @@ class Perfiles extends Controller{
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                     // Toma de datos del POSTMAN        
                     $datos = array(
-                        "perfil"=>$request->getVar("perfil"),
+                        "unidad_medida"=>$request->getVar("unidad_medida"),
+                        "cantidad"=>$request->getVar("cantidad"),
                         "empresa"=>$request->getVar("empresa")
                     );
                     if(!empty($datos)){
                         // Validar los datos
                         $validation->setRules([
-                            'perfil' => 'required|string|max_length[255]',
+                            'unidad_medida' => 'required|string|max_length[255]',
+                            'cantidad' => 'required|string|max_length[255]',
                             'empresa' => 'required|string|max_length[255]'
                         ]);
                         $validation->withRequest($this->request)
@@ -125,15 +128,15 @@ class Perfiles extends Controller{
                         }
                         else{
                             $datos = array(
-                                "perfil_descripcion"=>$datos["perfil"],
-                                "perfil_url"=>'',
+                                "unidad_medida"=>$datos["unidad_medida"],
+                                "cantidad"=>$datos["cantidad"],
                                 "id_empresa"=>$datos["empresa"]
                             );          
-                            $model = new PerfilesModel();
-                            $perfil = $model->insert($datos);
+                            $model = new Unidad_medidaModel();
+                            $unidad_medida = $model->insert($datos);
                             $data = array(
                                 "Status"=>200,
-                                "Detalle"=>"Registro exitoso, datos de perfil guardado"
+                                "Detalle"=>"Registro exitoso, datos de unidad_medida guardado"
                             );              
                             return json_encode($data, true);
                         }
@@ -172,8 +175,9 @@ class Perfiles extends Controller{
                     if(!empty($datos)){
                         // Validar los datos
                         $validation->setRules([
-                          'perfil' => 'required|string|max_length[255]',
-                          'empresa' => 'required|string|max_length[255]'
+                          'unidad_medida' => 'required|string|max_length[255]',
+                            'cantidad' => 'required|string|max_length[255]',
+                            'empresa' => 'required|string|max_length[255]'
                         ]);
                         $validation->withRequest($this->request)
                         ->run();    
@@ -183,18 +187,18 @@ class Perfiles extends Controller{
                             return json_encode($data, true); 
                         }
                         else{
-                            $model = new PerfilesModel();
-                            $perfil = $model->find($id);
+                            $model = new Unidad_medidaModel();
+                            $unidad_medida = $model->find($id);
                             $datos = array(
-                                "perfil_descripcion"=>$datos["perfil"],
-                                "perfil_url"=>'',
+                                "unidad_medida"=>$datos["unidad_medida"],
+                                "cantidad"=>$datos["cantidad"],
                                 "id_empresa"=>$datos["empresa"]
-                            );           
+                            );          
                             
-                            $perfil = $model->update($id, $datos);
+                            $unidad_medida = $model->update($id, $datos);
                             $data = array(
                                 "Status"=>200,
-                                "Detalle"=>"Actualización exitosa, datos de perfil modificado"
+                                "Detalle"=>"Actualización exitosa, datos de unidad_medida modificado"
                             );              
                             return json_encode($data, true);
                         }
@@ -227,18 +231,18 @@ class Perfiles extends Controller{
             if(array_key_exists('Authorization', $headers) && !empty($headers['Authorization'])){
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                             
-                    $model = new PerfilesModel();
-                    $perfil = $model->where('estado', 1)
+                    $model = new Unidad_medidaModel();
+                    $unidad_medida = $model->where('estado', 1)
                     ->find( $id );
-                    if(empty($perfil)){
+                    if(empty($unidad_medida)){
                         $data = array(
                             "Status"=>404,
-                            "Detalles"=>"No hay ningún perfil con este id"   
+                            "Detalles"=>"No hay ningún unidad_medida con este id"   
                         );
                     }
                     else{
                         $datos = array('estado' => 0 );
-                        $perfil = $model->update($id, $datos);
+                        $unidad_medida = $model->update($id, $datos);
                         $data = array(
                             "Status" => 200,
                             "Detalles" => "Se ha borrado con éxito"
@@ -264,3 +268,9 @@ class Perfiles extends Controller{
 
 
 }
+
+
+
+
+
+

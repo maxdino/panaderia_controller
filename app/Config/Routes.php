@@ -41,6 +41,9 @@ $routes->resource('permisos');
 $routes->resource('usuario');
 $routes->resource('permisos_modulo');
 $routes->resource('categoria');
+$routes->resource('proveedor');
+$routes->resource('unidad_medida');
+$routes->resource('compras');
 /**
 
  * --------------------------------------------------------------------

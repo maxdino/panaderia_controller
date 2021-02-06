@@ -8,4 +8,12 @@ class PerfilesModel extends Model
 	protected $primaryKey = 'perfil_id';
 	protected $returnType     = 'array';
 	protected $allowedFields = ['perfil_descripcion', 'perfil_url','estado', 'id_empresa'];
+
+	function traerperfiles($id){
+		return $this->db->table('perfiles')
+		->select('*')
+		->where("id_empresa",$id)
+		->where("estado",'1')
+		->get()->getResultArray();
+	}
 }

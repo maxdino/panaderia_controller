@@ -1,10 +1,10 @@
 <?php
 namespace App\Controllers;
 use CodeIgniter\Controller;
-use App\Models\PerfilesModel;
+use App\Models\ProveedorModel;
 use App\Models\RegistrosModel;
 
-class Perfiles extends Controller{
+class Proveedor extends Controller{
     public function index(){
         $request = \Config\Services::request(); 
         $validation = \Config\Services::validation();
@@ -16,10 +16,10 @@ class Perfiles extends Controller{
             if(array_key_exists('Authorization', $headers) && !empty($headers['Authorization'])){
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                             
-                    $model = new PerfilesModel();
-                    $perfil = $model->where('estado', 1)
+                    $model = new ProveedorModel();
+                    $proveedor = $model->where('estado', 1)
                     ->findAll();
-                    if (empty($perfil)) {
+                    if (empty($proveedor)) {
                         $data = array(
                             "Status"=>404,
                             "Total de resultados" => 0,
@@ -30,8 +30,8 @@ class Perfiles extends Controller{
                     else{
                         $data = array(
                             "Status" => 200,
-                            'Total de resultados' => count($perfil),
-                            "Detalles" => $perfil
+                            'Total de resultados' => count($proveedor),
+                            "Detalles" => $proveedor
                         );
                         return json_encode($data, true);
                     }   
@@ -63,18 +63,19 @@ class Perfiles extends Controller{
             if(array_key_exists('Authorization', $headers) && !empty($headers['Authorization'])){
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                             
-                    $model = new PerfilesModel();
-                    $perfil = $model->traerperfiles($id);
-                    if (empty($perfil)) {
+                    $model = new ProveedorModel();
+                    $proveedor = $model->where('estado', 1)
+                    ->find( $id );
+                    if (empty($proveedor)) {
                         $data = array(
                             "Status"=>404,
-                            "Detalles"=>"No hay ningún perfil con este id" 
+                            "Detalles"=>"No hay ningún proveedor con este id" 
                         );
                     }
                     else{
                         $data = array(
                             'Status' => 200,
-                            "Detalles" => $perfil
+                            "Detalles" => $proveedor
                         );
                         return json_encode($data, true);
                         
@@ -107,14 +108,24 @@ class Perfiles extends Controller{
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                     // Toma de datos del POSTMAN        
                     $datos = array(
-                        "perfil"=>$request->getVar("perfil"),
-                        "empresa"=>$request->getVar("empresa")
+                        "nombres"=>$request->getVar("nombres"),
+                        "apellido1"=>$request->getVar("apellido_paterno"),
+                        "apellido2"=>$request->getVar("apellido_materno"),
+                        "direccion"=>$request->getVar("direccion"),
+                        "telefono"=>$request->getVar("telefono"),
+                        "empresa"=>$request->getVar("empresa"),
+                        "imagen"=>$request->getVar("imagen"),
                     );
                     if(!empty($datos)){
                         // Validar los datos
                         $validation->setRules([
-                            'perfil' => 'required|string|max_length[255]',
-                            'empresa' => 'required|string|max_length[255]'
+                            'nombres' => 'required|string|max_length[255]',
+                            'apellido_paterno' => 'required|string|max_length[255]',
+                            'apellido_materno' => 'required|string|max_length[255]',
+                            'direccion' => 'required|string|max_length[255]',
+                            'telefono' => 'required|string|max_length[255]',
+                            'empresa' => 'required|string|max_length[255]',
+                            'imagen' => 'required|string|max_length[255]'   
                         ]);
                         $validation->withRequest($this->request)
                         ->run();    
@@ -125,15 +136,19 @@ class Perfiles extends Controller{
                         }
                         else{
                             $datos = array(
-                                "perfil_descripcion"=>$datos["perfil"],
-                                "perfil_url"=>'',
-                                "id_empresa"=>$datos["empresa"]
+                                "nombres"=>$datos["nombres"],
+                                "apellido1"=>$datos["apellido1"],
+                                "apellido2"=>$datos["apellido2"],
+                                "direccion"=>$datos["direccion"],
+                                "telefono"=>$datos["telefono"],
+                                "id_empresa"=>$datos["empresa"],
+                                "imagen"=>$datos["imagen"]
                             );          
-                            $model = new PerfilesModel();
-                            $perfil = $model->insert($datos);
+                            $model = new ProveedorModel();
+                            $proveedor = $model->insert($datos);
                             $data = array(
                                 "Status"=>200,
-                                "Detalle"=>"Registro exitoso, datos de perfil guardado"
+                                "Detalle"=>"Registro exitoso, datos de proveedor guardado"
                             );              
                             return json_encode($data, true);
                         }
@@ -172,8 +187,13 @@ class Perfiles extends Controller{
                     if(!empty($datos)){
                         // Validar los datos
                         $validation->setRules([
-                          'perfil' => 'required|string|max_length[255]',
-                          'empresa' => 'required|string|max_length[255]'
+                           'nombres' => 'required|string|max_length[255]',
+                           'apellido_paterno' => 'required|string|max_length[255]',
+                           'apellido_materno' => 'required|string|max_length[255]',
+                           'direccion' => 'required|string|max_length[255]',
+                           'telefono' => 'required|string|max_length[255]',
+                           'empresa' => 'required|string|max_length[255]',
+                           'imagen' => 'required|string|max_length[255]'
                         ]);
                         $validation->withRequest($this->request)
                         ->run();    
@@ -183,18 +203,22 @@ class Perfiles extends Controller{
                             return json_encode($data, true); 
                         }
                         else{
-                            $model = new PerfilesModel();
-                            $perfil = $model->find($id);
+                            $model = new ProveedorModel();
+                            $proveedor = $model->find($id);
                             $datos = array(
-                                "perfil_descripcion"=>$datos["perfil"],
-                                "perfil_url"=>'',
-                                "id_empresa"=>$datos["empresa"]
-                            );           
+                                "nombres"=>$datos["nombres"],
+                                "apellido1"=>$datos["apellido_paterno"],
+                                "apellido2"=>$datos["apellido_materno"],
+                                "direccion"=>$datos["direccion"],
+                                "telefono"=>$datos["telefono"],
+                                "id_empresa"=>$datos["empresa"],
+                                "imagen"=>$datos["imagen"]
+                            );          
                             
-                            $perfil = $model->update($id, $datos);
+                            $proveedor = $model->update($id, $datos);
                             $data = array(
                                 "Status"=>200,
-                                "Detalle"=>"Actualización exitosa, datos de perfil modificado"
+                                "Detalle"=>"Actualización exitosa, datos de proveedor modificado"
                             );              
                             return json_encode($data, true);
                         }
@@ -227,18 +251,18 @@ class Perfiles extends Controller{
             if(array_key_exists('Authorization', $headers) && !empty($headers['Authorization'])){
                 if($request->getHeader('Authorization')=='Authorization: Basic '.base64_encode($value["cliente_id"].":".$value["llave_secreta"])){
                             
-                    $model = new PerfilesModel();
-                    $perfil = $model->where('estado', 1)
+                    $model = new ProveedorModel();
+                    $proveedor = $model->where('estado', 1)
                     ->find( $id );
-                    if(empty($perfil)){
+                    if(empty($proveedor)){
                         $data = array(
                             "Status"=>404,
-                            "Detalles"=>"No hay ningún perfil con este id"   
+                            "Detalles"=>"No hay ningún proveedor con este id"   
                         );
                     }
                     else{
                         $datos = array('estado' => 0 );
-                        $perfil = $model->update($id, $datos);
+                        $proveedor = $model->update($id, $datos);
                         $data = array(
                             "Status" => 200,
                             "Detalles" => "Se ha borrado con éxito"
@@ -264,3 +288,9 @@ class Perfiles extends Controller{
 
 
 }
+
+
+
+
+
+
