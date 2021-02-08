@@ -14,6 +14,7 @@ class ComprasModel extends Model
 		->select('p.nombres,p.apellido1,p.apellido2,c.fecha,c.id_empresa,c.numero_correlativo,c.monto')
 		->where("c.estado",1)
 		->join("proveedor as p","p.id_proveedor=c.id_proveedor")
+		->orderBy("c.id_compras desc")
 		->get()->getResultArray();
 	}
 }
