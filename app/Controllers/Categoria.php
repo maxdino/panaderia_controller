@@ -109,12 +109,14 @@ class Categoria extends Controller{
                     // Toma de datos del POSTMAN        
                     $datos = array(
                         "categoria"=>$request->getVar("categoria"),
+                        "imagen"=>$request->getVar("imagen"),
                         "empresa"=>$request->getVar("empresa")
                     );
                     if(!empty($datos)){
                         // Validar los datos
                         $validation->setRules([
                             'categoria' => 'required|string|max_length[255]',
+                            'imagen' => 'required|string|max_length[255]',
                             'empresa' => 'required|string|max_length[255]'
                         ]);
                         $validation->withRequest($this->request)
@@ -127,6 +129,7 @@ class Categoria extends Controller{
                         else{
                             $datos = array(
                                 "categoria"=>$datos["categoria"],
+                                "imagen"=>$datos["imagen"],
                                 "id_empresa"=>$datos["empresa"]
                             );          
                             $model = new CategoriaModel();
@@ -173,6 +176,7 @@ class Categoria extends Controller{
                         // Validar los datos
                         $validation->setRules([
                           'categoria' => 'required|string|max_length[255]',
+                          'imagen' => 'required|string|max_length[255]',
                           'empresa' => 'required|string|max_length[255]'
                         ]);
                         $validation->withRequest($this->request)
@@ -187,6 +191,7 @@ class Categoria extends Controller{
                             $categoria = $model->find($id);
                             $datos = array(
                                 "categoria"=>$datos["categoria"],
+                                "imagen"=>$datos["imagen"],
                                 "id_empresa"=>$datos["empresa"]
                             );           
                             

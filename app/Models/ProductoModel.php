@@ -11,7 +11,7 @@ class ProductoModel extends Model
 
 	function listar_producto(){
 		return $this->db->table('productos p')
-		->select('p.idProducto,p.descripcion,p.cantidad,p.precio,c.categoria,p.id_empresa')
+		->select('p.idProducto,p.descripcion,p.cantidad,p.precio,p.id_categoria,c.categoria,p.id_empresa')
 		->where("p.estado",'1')
 		->join("categoria as c","c.id_categoria=p.id_categoria")
 		->get()->getResultArray();
@@ -19,7 +19,7 @@ class ProductoModel extends Model
 
 	function nuevo_producto(){
 		return $this->db->table('productos p')
-		->select('p.idProducto,p.descripcion,p.precio,p.cantidad,p.id_empresa')
+		->select('p.idProducto,p.descripcion,p.precio,p.cantidad,p.id_categoria,p.id_empresa')
 		->where("p.estado",'1')
 		->join("categoria as c","c.id_categoria=p.id_categoria")
 		->orderBy("p.idProducto desc")
