@@ -114,6 +114,8 @@ class clientes extends Controller{
                         "direccion"=>$request->getVar("direccion"),
                         "telefono"=>$request->getVar("telefono"),
                         "empresa"=>$request->getVar("empresa"),
+                        "email"=>$request->getVar("email"),
+                        "clave"=>$request->getVar("clave"),
                     );
                     if(!empty($datos)){
                         // Validar los datos
@@ -123,6 +125,8 @@ class clientes extends Controller{
                             'apellido_materno' => 'required|string|max_length[255]',
                             'direccion' => 'required|string|max_length[255]',
                             'telefono' => 'required|string|max_length[255]',
+                            'email' => 'required|string|max_length[255]',
+                            'clave' => 'required|string|max_length[255]',
                             'empresa' => 'required|string|max_length[255]'   
                         ]);
                         $validation->withRequest($this->request)
@@ -139,6 +143,8 @@ class clientes extends Controller{
                                 "apellido2"=>$datos["apellido2"],
                                 "direccion"=>$datos["direccion"],
                                 "telefono"=>$datos["telefono"],
+                                "email"=>$datos["email"],
+                                "clave"=>$datos["clave"],
                                 "id_empresa"=>$datos["empresa"]
                             );          
                             $model = new ClientesModel();
@@ -189,6 +195,8 @@ class clientes extends Controller{
                            'apellido_materno' => 'required|string|max_length[255]',
                            'direccion' => 'required|string|max_length[255]',
                            'telefono' => 'required|string|max_length[255]',
+                           'email' => 'required|string|max_length[255]',
+                            'clave' => 'required|string|max_length[255]',
                            'empresa' => 'required|string|max_length[255]'
                         ]);
                         $validation->withRequest($this->request)
@@ -207,6 +215,8 @@ class clientes extends Controller{
                                 "apellido2"=>$datos["apellido_materno"],
                                 "direccion"=>$datos["direccion"],
                                 "telefono"=>$datos["telefono"],
+                                "email"=>$datos["email"],
+                                "clave"=>$datos["clave"],
                                 "id_empresa"=>$datos["empresa"]
                             );          
                             
